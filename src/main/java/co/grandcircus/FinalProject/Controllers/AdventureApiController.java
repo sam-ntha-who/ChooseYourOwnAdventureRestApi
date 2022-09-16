@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import co.grandcircus.FinalProject.HelperFunctions.SceneID;
-import co.grandcircus.FinalProject.HelperFunctions.StoryID;
+
 
 import co.grandcircus.FinalProject.Models.Scene;
 import co.grandcircus.FinalProject.Models.Story;
