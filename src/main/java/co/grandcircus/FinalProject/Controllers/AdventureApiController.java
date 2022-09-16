@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.grandcircus.FinalProject.ExceptionHandling.SceneNotFoundException;
+import co.grandcircus.FinalProject.ExceptionHandling.StoryNotFoundException;
 import co.grandcircus.FinalProject.Models.Scene;
 import co.grandcircus.FinalProject.Models.Story;
 import co.grandcircus.FinalProject.Repositories.SceneRepository;
@@ -49,15 +51,15 @@ public class AdventureApiController {
 		return scene;
 	}
 
-	// so far unused
-	// Create Multiple Scenes
-	@PostMapping("/create-all-scenes")
-	@ResponseStatus(HttpStatus.CREATED)
-	public void createAllScenes(@RequestBody List<Scene> childList) {
-		for (Scene scene : childList) {
-			sceneRepo.insert(scene);
-		}
-	}
+//	// so far unused
+//	// Create Multiple Scenes
+//	@PostMapping("/create-all-scenes")
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public void createAllScenes(@RequestBody List<Scene> childList) {
+//		for (Scene scene : childList) {
+//			sceneRepo.insert(scene);
+//		}
+//	}
 
 	// Get list of stories
 	@GetMapping("/allStories")

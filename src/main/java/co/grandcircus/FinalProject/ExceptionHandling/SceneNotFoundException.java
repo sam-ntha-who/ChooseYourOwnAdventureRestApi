@@ -1,4 +1,4 @@
-package co.grandcircus.FinalProject.Controllers;
+package co.grandcircus.FinalProject.ExceptionHandling;
 
 public class SceneNotFoundException extends RuntimeException {
 	
