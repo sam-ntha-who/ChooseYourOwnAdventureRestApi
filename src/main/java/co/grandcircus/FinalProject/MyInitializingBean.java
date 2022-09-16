@@ -25,11 +25,11 @@ class MyInitializingBean implements InitializingBean {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		
-		String storiesMaster = "stories";
-		String scenesMaster = "scenes";
+		String storiesMaster = "storiesMASTER";
+		String scenesMaster = "scenesMASTER";
 		
-		String storiesUser = "storiesTESTING";
-		String scenesUser = "scenesTESTING";
+		String storiesUser = "stories";
+		String scenesUser = "scenes";
 		
 		try (MongoClient mongoClient = MongoClients.create(connectionString)) {
 

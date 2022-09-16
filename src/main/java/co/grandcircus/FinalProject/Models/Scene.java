@@ -9,22 +9,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("scenes")
 public class Scene{
 
-	@Id
 	// sceneId
+	@Id
 	private String id;
 	private String storyId;
 	private String storyTitle;
-	// previous sceneId
 	private String parentId;
-	// actual scene
 	private String description;
-	// wording for the choice that the user is making to get to this scene ie "turn left" "open the door" etc (to be accessed from parentScene)
+	// choice that leads to this scene
 	private String option;
 	// photo url
 	private String photoUrl;
 	// scene tree
 	private List<Scene> childList;
-	// for the DB this may need to wind up being Integer v int	
 	private int pathLength;
 	
 	
