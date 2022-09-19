@@ -51,16 +51,6 @@ public class AdventureApiController {
 		return scene;
 	}
 
-//	// so far unused
-//	// Create Multiple Scenes
-//	@PostMapping("/create-all-scenes")
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public void createAllScenes(@RequestBody List<Scene> childList) {
-//		for (Scene scene : childList) {
-//			sceneRepo.insert(scene);
-//		}
-//	}
-
 	// Get list of stories
 	@GetMapping("/allStories")
 	public List<Story> getStories() {
