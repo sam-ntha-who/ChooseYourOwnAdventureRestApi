@@ -23,7 +23,24 @@ public class Scene{
 	// scene tree
 	private List<Scene> childList;
 	private int pathLength;
+	boolean shortest;
+	boolean longest;
 	
+	public boolean isShortest() {
+		return shortest;
+	}
+
+	public void setShortest(boolean shortest) {
+		this.shortest = shortest;
+	}
+
+	public boolean isLongest() {
+		return longest;
+	}
+
+	public void setLongest(boolean longest) {
+		this.longest = longest;
+	}
 	
 //	
 //	@Override
