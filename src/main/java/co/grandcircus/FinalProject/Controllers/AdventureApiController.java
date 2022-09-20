@@ -26,6 +26,12 @@ import co.grandcircus.FinalProject.Repositories.StoryRepository;
 @RestController
 public class AdventureApiController {
 
+	@GetMapping("")
+	public String root() {
+		return "ok";
+	}
+
+	
 	@Autowired
 	private StoryRepository storyRepo;
 
