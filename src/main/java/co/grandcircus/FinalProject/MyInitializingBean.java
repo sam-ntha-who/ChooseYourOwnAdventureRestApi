@@ -16,6 +16,9 @@
 //import com.mongodb.client.MongoCollection;
 //import com.mongodb.client.MongoDatabase;
 //
+
+// no need for this component when merely adding to the master collections 
+
 //@Component
 //class MyInitializingBean implements InitializingBean {
 //
