@@ -8,13 +8,13 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import co.grandcircus.FinalProject.Models.Scene;
 
 public interface SceneRepository extends MongoRepository<Scene, String> {
-	
+
 	List<Scene> findAll();
-	
+
 	List<Scene> findByParentId(String parentId);
-	
+
 	Optional<Scene> findByStoryIdAndId(String storyId, String id);
-	
+
 	Scene findSceneById(String id);
 
 }

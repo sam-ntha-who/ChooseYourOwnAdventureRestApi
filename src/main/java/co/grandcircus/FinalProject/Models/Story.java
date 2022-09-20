@@ -3,7 +3,6 @@ package co.grandcircus.FinalProject.Models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
 @Document("stories")
 public class Story {
 
@@ -13,24 +12,15 @@ public class Story {
 	private String startingSceneId;
 	private String photoUrl;
 
-	//constructors
-	public Story() {
-	}
-	
-	public Story(String title, String startingSceneId) {
-		this.title = title;
-		this.startingSceneId = startingSceneId;
-	}
-		
-	//getters and setters
-	
+	// getters and setters
 	public String getPhotoUrl() {
 		return photoUrl;
 	}
-	
+
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
 	}
+
 	public String getId() {
 		return id;
 	}
@@ -55,13 +45,4 @@ public class Story {
 		this.startingSceneId = startingSceneId;
 	}
 
-	public Story(String id, String title, String startingSceneId) {
-		this.id = id;
-		this.title = title;
-		this.startingSceneId = startingSceneId;
-	}
-
-	public Story(String title) {
-		this.title = title;
-	}
 }
