@@ -24,17 +24,17 @@ class MyInitializingBean implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		
+
 		String storiesMaster = "storiesMASTER";
 		String scenesMaster = "scenesMASTER";
-		
+
 		String storiesUser = "stories";
 		String scenesUser = "scenes";
-		
+
 		try (MongoClient mongoClient = MongoClients.create(connectionString)) {
 
 			MongoDatabase adventureDB = mongoClient.getDatabase("AdventureStoryDB");
-			
+
 			// creates 2 new collections titled <String storiesUser> and <String scenesUser>
 			// if it exists already, it's cleared and a new one is created in its place
 			try {
@@ -73,12 +73,15 @@ class MyInitializingBean implements InitializingBean {
 
 				masterScenesList.add((Document) itThruScene.next());
 			}
-			
-			// creates MongoCollection from empty USER collections
-			MongoCollection<Document> userStoriesCollection = mongoClient.getDatabase("AdventureStoryDB").getCollection(storiesUser);
-			MongoCollection<Document> userScenesCollection = mongoClient.getDatabase("AdventureStoryDB").getCollection(scenesUser);
 
-			// copies masterScenesList and masterStories list to userStoriesCollection and userScenesCollection
+			// creates MongoCollection from empty USER collections
+			MongoCollection<Document> userStoriesCollection = mongoClient.getDatabase("AdventureStoryDB")
+					.getCollection(storiesUser);
+			MongoCollection<Document> userScenesCollection = mongoClient.getDatabase("AdventureStoryDB")
+					.getCollection(scenesUser);
+
+			// copies masterScenesList and masterStories list to userStoriesCollection and
+			// userScenesCollection
 			userStoriesCollection.insertMany(masterStoriesList);
 			userScenesCollection.insertMany(masterScenesList);
 

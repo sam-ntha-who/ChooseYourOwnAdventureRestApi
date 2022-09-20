@@ -5,88 +5,23 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
 @Document("scenes")
-public class Scene{
+public class Scene {
 
-	// sceneId
 	@Id
 	private String id;
 	private String storyId;
 	private String storyTitle;
 	private String parentId;
 	private String description;
-	// choice that leads to this scene
 	private String option;
-	// photo url
 	private String photoUrl;
-	// scene tree
 	private List<Scene> childList;
 	private int pathLength;
 	boolean shortest;
 	boolean longest;
-	
-	public boolean isShortest() {
-		return shortest;
-	}
 
-	public void setShortest(boolean shortest) {
-		this.shortest = shortest;
-	}
-
-	public boolean isLongest() {
-		return longest;
-	}
-
-	public void setLongest(boolean longest) {
-		this.longest = longest;
-	}
-	
-//	
-//	@Override
-//	public String toString() {
-//		return "Scene [storyTitle=" + storyTitle + ", option=" + option + "]";
-//	}
-
-	//constructors
-	public Scene() {
-	}
-	
-	public Scene(String id) {
-		this.id = id;
-	}
-	
-	// constructor for setting a scene that isn't startingScene
-	public Scene(String id, String storyId, String parentId, String option, String description) {
-		this.id = id;
-		this.storyId = storyId;
-		this.parentId = parentId;
-		this.option = option;
-		this.description = description;
-	}
-	
-
-	// constructor with current fields
-	public Scene(String id, String storyId, String storyTitle, String parentId, String description,
-		String option, String photoUrl, List<Scene> childList) {
-		this.id = id;
-		this.storyId = storyId;
-		this.storyTitle = storyTitle;
-		this.parentId = parentId;
-		this.description = description;
-		this.option = option;
-		this.photoUrl = photoUrl;
-		this.childList = childList;
-	}
-	
-	// for setting starting scene - will stay the same post treeConversion
-	public Scene(String storyId, String description, String parentId) {
-		this.storyId = storyId;
-		this.description = description;
-		this.parentId = parentId;
-	}
-
-	//getters and setters
+	// getters and setters
 	public String getId() {
 		return id;
 	}
@@ -114,6 +49,7 @@ public class Scene{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -156,6 +92,22 @@ public class Scene{
 
 	public void setPathLength(int pathLength) {
 		this.pathLength = pathLength;
+	}
+
+	public boolean isShortest() {
+		return shortest;
+	}
+
+	public void setShortest(boolean shortest) {
+		this.shortest = shortest;
+	}
+
+	public boolean isLongest() {
+		return longest;
+	}
+
+	public void setLongest(boolean longest) {
+		this.longest = longest;
 	}
 
 }
