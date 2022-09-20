@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import co.grandcircus.FinalProject.Models.Story;
 
-public interface StoryRepository extends MongoRepository<Story, String> {
+public interface StoryMASTERRepository extends MongoRepository<Story, String> {
 
 	List<Story> findAll();
 

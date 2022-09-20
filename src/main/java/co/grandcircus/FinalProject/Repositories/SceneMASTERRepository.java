@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import co.grandcircus.FinalProject.Models.Scene;
 
-public interface SceneRepository extends MongoRepository<Scene, String> {
+public interface SceneMASTERRepository extends MongoRepository<Scene, String> {
 	
 	List<Scene> findAll();
 	

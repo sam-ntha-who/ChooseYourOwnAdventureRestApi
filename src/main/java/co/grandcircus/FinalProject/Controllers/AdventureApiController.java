@@ -20,17 +20,17 @@ import co.grandcircus.FinalProject.ExceptionHandling.SceneNotFoundException;
 import co.grandcircus.FinalProject.ExceptionHandling.StoryNotFoundException;
 import co.grandcircus.FinalProject.Models.Scene;
 import co.grandcircus.FinalProject.Models.Story;
-import co.grandcircus.FinalProject.Repositories.SceneRepository;
-import co.grandcircus.FinalProject.Repositories.StoryRepository;
+import co.grandcircus.FinalProject.Repositories.SceneMASTERRepository;
+import co.grandcircus.FinalProject.Repositories.StoryMASTERRepository;
 
 @RestController
 public class AdventureApiController {
 
 	@Autowired
-	private StoryRepository storyRepo;
+	private StoryMASTERRepository storyRepo;
 
 	@Autowired
-	private SceneRepository sceneRepo;
+	private SceneMASTERRepository sceneRepo;
 
 	
 	// CRUD Functions
