@@ -158,4 +158,11 @@ public class Scene{
 		this.pathLength = pathLength;
 	}
 
+	@Override
+	public String toString() {
+		return "Scene [id=" + id + ", storyId=" + storyId + ", parentId=" + parentId + ", option=" + option
+				+ ", pathLength=" + pathLength + ", shortest=" + shortest + ", longest=" + longest + "]";
+	}
+
+	
 }

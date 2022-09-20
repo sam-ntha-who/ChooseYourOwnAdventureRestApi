@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.grandcircus.FinalProject.PathLengthCalculator;
 import co.grandcircus.FinalProject.ExceptionHandling.SceneNotFoundException;
 import co.grandcircus.FinalProject.ExceptionHandling.StoryNotFoundException;
 import co.grandcircus.FinalProject.Models.Scene;
@@ -32,7 +33,9 @@ public class AdventureApiController {
 	@Autowired
 	private SceneMASTERRepository sceneRepo;
 
-	
+	@Autowired
+	PathLengthCalculator pathCalc;
+
 	// CRUD Functions
 
 	// Create Story
@@ -51,41 +54,75 @@ public class AdventureApiController {
 		return scene;
 	}
 
-//	// so far unused
-//	// Create Multiple Scenes
-//	@PostMapping("/create-all-scenes")
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public void createAllScenes(@RequestBody List<Scene> childList) {
-//		for (Scene scene : childList) {
-//			sceneRepo.insert(scene);
-//		}
-//	}
-
 	// Get list of stories
 	@GetMapping("/allStories")
 	public List<Story> getStories() {
 		return storyRepo.findAll();
 	}
-	
+
 	// get a single story
 	@GetMapping("story/{storyId}")
 	public Story getStory(@PathVariable String storyId) {
 		return storyRepo.findById(storyId).orElseThrow(() -> new StoryNotFoundException(storyId));
 	}
-	
-	
+
 	// get a scene
 	@GetMapping("/read-scene/{id}")
 	public Scene getScene(@PathVariable("id") String id) {
-		return sceneRepo.findById(id).orElseThrow(() -> new SceneNotFoundException(id));
+		// calls database for specific scene and saves for later as response
+		Scene response = sceneRepo.findById(id).orElseThrow(() -> new SceneNotFoundException(id));
+
+		// calls database for specific scene or throws exception if not found
+		Scene scene = sceneRepo.findById(id).orElseThrow(() -> new SceneNotFoundException(id));
+
+		// builds tree from scene
+		Scene sceneTree = buildTree(scene);
+
+		// checks if childList is empty, if it is, this scene is an end scene
+		if (sceneTree.getChildList() == null || sceneTree.getChildList().size() == 0) {
+//			scene.setLongest(false);
+//			scene.setShortest(true);
+
+			return scene;
+
+		}
+		
+		// if not an end scene, then the setPathLength is run on the whole tree
+		pathCalc.setPathLength(sceneTree); 
+		
+		// new list created to hold Child Scenes for the response (this is so an entire tree isn't returned in the response)
+		List<Scene> responseChildList = new ArrayList<>();
+		
+		int childListSize = sceneTree.getChildList().size();
+		
+		// creates a new scene, copying the necessary data from the children in the tree (which have pathLength calculated)
+		// adds the completed copied scene to an ArrayList
+		for (int i = 0; i < childListSize; i++) {
+			Scene masterChild = sceneTree.getChildList().get(i);
+			Scene responseChild = new Scene();
+			responseChild.setId(masterChild.getId());
+			responseChild.setOption(masterChild.getOption());
+			responseChild.setPathLength(masterChild.getPathLength());
+
+			responseChildList.add(responseChild);
+		}
+		
+		// adds newly created childList to response
+		response.setChildList(responseChildList);
+		
+		// sets booleans on ChildList
+		response = pathCalc.setPathBool(response);
+
+		return response;
 	}
+	
 
 	// may be replaced in views controller by calling getStory(id).getId()
 	// Read a Story Name
 	public String findStoryName(@RequestParam String id) {
-		
+
 		Story story = storyRepo.findById(id).orElseThrow(() -> new SceneNotFoundException(id));
-		
+
 		return story.getTitle();
 	}
 
@@ -105,15 +142,15 @@ public class AdventureApiController {
 	@PostMapping("/save-scene")
 	public Scene saveScene(@RequestBody Scene scene) {
 		return sceneRepo.save(scene);
-		
+
 	}
-	
+
 	@PostMapping("/save-story")
 	public Story saveStory(@RequestBody Story story) {
 		return storyRepo.save(story);
-		
+
 	}
-	
+
 	// Delete Scene (and all connected scenes)
 	@DeleteMapping("/delete-scene-tree/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -121,8 +158,7 @@ public class AdventureApiController {
 
 		ArrayList<Scene> scenesToDelete = new ArrayList<>();
 
-		Scene sceneToDelete = sceneRepo.findById(id)
-				.orElseThrow(() -> new SceneNotFoundException(id));
+		Scene sceneToDelete = sceneRepo.findById(id).orElseThrow(() -> new SceneNotFoundException(id));
 
 		scenesToDelete.add(sceneToDelete);
 
@@ -142,15 +178,27 @@ public class AdventureApiController {
 			sceneRepo.delete(s2d);
 		}
 	}
-	
+
 	@DeleteMapping("/delete-story/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteStory(@PathVariable String id) {
-		
+
 		Story storyToDelete = storyRepo.findById(id).orElseThrow(() -> new StoryNotFoundException(id));
-		
+
 		deleteSceneTree(storyToDelete.getStartingSceneId());
 		storyRepo.delete(storyToDelete);
+	}
+
+	public Scene buildTree(Scene scene) {
+
+		List<Scene> childList = sceneRepo.findByParentId(scene.getId());
+		scene.setChildList(childList);
+		if (childList != null) {
+			for (Scene s : childList) {
+				buildTree(s);
+			}
+		}
+		return scene;
 	}
 
 	// Error Handling
@@ -167,5 +215,5 @@ public class AdventureApiController {
 	String storyNotFoundHandler(StoryNotFoundException ex) {
 		return ex.getMessage();
 	}
-	
+
 }
