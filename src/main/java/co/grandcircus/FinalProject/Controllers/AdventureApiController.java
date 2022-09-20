@@ -80,44 +80,41 @@ public class AdventureApiController {
 
 		// checks if childList is empty, if it is, this scene is an end scene
 		if (sceneTree.getChildList() == null || sceneTree.getChildList().size() == 0) {
-//			scene.setLongest(false);
-//			scene.setShortest(true);
 
 			return scene;
-
 		}
-		
-		// if not an end scene, then the setPathLength is run on the whole tree
-		pathCalc.setPathLength(sceneTree); 
-		
-		// new list created to hold Child Scenes for the response (this is so an entire tree isn't returned in the response)
+
+		pathCalc.setPathLength(sceneTree);
+
+		// new list created to hold Child Scenes for the response (this is so an entire
+		// tree isn't returned in the response)
 		List<Scene> responseChildList = new ArrayList<>();
-		
+
 		int childListSize = sceneTree.getChildList().size();
-		
-		// creates a new scene, copying the necessary data from the children in the tree (which have pathLength calculated)
+
+		// creates a new scene, copying the necessary data from the children in the tree
+		// (which have pathLength calculated)
 		// adds the completed copied scene to an ArrayList
 		for (int i = 0; i < childListSize; i++) {
 			Scene masterChild = sceneTree.getChildList().get(i);
 			Scene responseChild = new Scene();
+			
 			responseChild.setId(masterChild.getId());
 			responseChild.setOption(masterChild.getOption());
 			responseChild.setPathLength(masterChild.getPathLength());
 
 			responseChildList.add(responseChild);
 		}
-		
+
 		// adds newly created childList to response
 		response.setChildList(responseChildList);
-		
+
 		// sets booleans on ChildList
 		response = pathCalc.setPathBool(response);
 
 		return response;
 	}
-	
 
-	// may be replaced in views controller by calling getStory(id).getId()
 	// Read a Story Name
 	public String findStoryName(@RequestParam String id) {
 
@@ -129,7 +126,7 @@ public class AdventureApiController {
 	// Update a scene
 	@PostMapping("/update-scene")
 	public Scene updateScene(@RequestBody Scene scene, @RequestParam String id) {
-		// maybe change findByStoryIdAndId to a diff method
+
 		Scene sceneToUpdate = sceneRepo.findByStoryIdAndId(scene.getStoryId(), id)
 				.orElseThrow(() -> new SceneNotFoundException(scene.getId()));
 
@@ -186,6 +183,7 @@ public class AdventureApiController {
 		Story storyToDelete = storyRepo.findById(id).orElseThrow(() -> new StoryNotFoundException(id));
 
 		deleteSceneTree(storyToDelete.getStartingSceneId());
+
 		storyRepo.delete(storyToDelete);
 	}
 
@@ -194,6 +192,7 @@ public class AdventureApiController {
 		List<Scene> childList = sceneRepo.findByParentId(scene.getId());
 		scene.setChildList(childList);
 		if (childList != null) {
+
 			for (Scene s : childList) {
 				buildTree(s);
 			}
