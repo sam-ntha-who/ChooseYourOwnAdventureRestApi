@@ -1,4 +1,4 @@
-# ChooseYourOwnAdventureRestApi
+# DIY Storytime Rest API
 This is the RESTful API for DIY Storytime, our web app for the Final Project for Grand Circus Java Bootcamp. The web app can be found here: https://github.com/sam-ntha-who/ChooseYourOwnAdventureWebApp.git
 
 # The DIY Storytime web app:
