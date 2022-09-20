@@ -1,7 +1,7 @@
 # DIY Storytime Rest API
 This is the RESTful API for DIY Storytime, our web app for the Final Project for Grand Circus Java Bootcamp. The web app can be found here: https://github.com/sam-ntha-who/ChooseYourOwnAdventureWebApp.git
 
-# The DIY Storytime web app:
+# The DIY Storytime Web App:
 
 The DIY Storytime web app makes use of this API to communicate with our No-SQL database to perform all crud functionality to both Scene and Story collections so that stories can be played, written, edited and deleted with ease. As this web app is for creating Choose Your Own Adventure style stories, the data is arranged in a non-binary or multifurcating tree structure so that story paths can be easily nested within the scenes they are chosen from. 
 
